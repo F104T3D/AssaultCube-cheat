@@ -3,7 +3,6 @@
 #include <chrono>
 #include <iostream>
 #include "globals.hpp"
-#include "base.hpp"
 
 void infhealth() {
 

@@ -4,9 +4,9 @@
 #include <chrono>
 #include <iostream>
 #include "globals.hpp"
-#include "base.hpp"
 
 int main() {
+
 	// take image (snapshot) of ALL (TH32C_) proc running - return val is HANDLE a reference to the snapshot in mem
 	HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0); // 0 no specific proc
 	if (snapshot == INVALID_HANDLE_VALUE) {
@@ -53,10 +53,9 @@ int main() {
 		std::cout << "failed to take module snapshot.\n";
 		return 1;
 	}
-
-	readBase();
-
 	modEntry.dwSize = sizeof(MODULEENTRY32);
+
+
 
 	if (Module32First(moduleSnap, &modEntry)) { // Get first module
 		do {
@@ -65,15 +64,26 @@ int main() {
 				break;
 			}
 		} while (Module32Next(moduleSnap, &modEntry)); // Move to next module
+		baseAddress = reinterpret_cast<uintptr_t>(modEntry.modBaseAddr);
+		std::cout << "Base address of ac_client.exe: 0x" << std::hex << baseAddress << std::endl;
 	}
 	CloseHandle(moduleSnap);
 
-	std::thread healthThread{ infhealth };
+	uintptr_t playerPtrAddress = baseAddress + 0x000000EC;
 
-	for (int a = 1; a < 5; a++) {
-		std::cout << "looped on main thread lol";
+	uintptr_t playerBase = 0;
+	if (ReadProcessMemory(hProcess, (LPCVOID)playerPtrAddress, &playerBase, sizeof(playerBase), nullptr)) {
+		std::cout << "Player base address: 0x" << std::hex << playerBase << std::endl;
+	}
+	else {
+		std::cout << "Failed to read player base address.\n";
+		return 1;
 	}
 
+	std::thread healthThread{ infhealth };
+	std::thread ammoThread{ infAmmo };
+
 	healthThread.join();
+	ammoThread.join();
 	std::cin.get();
 }

@@ -21,12 +21,15 @@
     <ClCompile Include="health.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ammo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="globals.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="globals.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="base.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
