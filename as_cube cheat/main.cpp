@@ -69,7 +69,7 @@ int main() {
 	}
 	CloseHandle(moduleSnap);
 
-	uintptr_t playerPtrAddress = baseAddress + 0x000000EC;
+	uintptr_t playerPtrAddress = baseAddress + 0x0045E3E6;
 
 	uintptr_t playerBase = 0;
 	if (ReadProcessMemory(hProcess, (LPCVOID)playerPtrAddress, &playerBase, sizeof(playerBase), nullptr)) {
