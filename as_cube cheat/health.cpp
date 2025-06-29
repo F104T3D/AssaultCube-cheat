@@ -10,17 +10,17 @@ void infhealth() {
 
     int health = 0;
     if (ReadProcessMemory(hProcess, (LPCVOID)healthAddress, &health, sizeof(health), nullptr)) {
-        std::cout << "current health: " << std::dec << health << std::endl;
+        std::cout << "\t[+] current health: " << std::dec << health << std::endl;
     }
     else {
-        std::cout << "failed to read health value.\n";
+        std::cout << "\t[-] failed to read health value (error: " << GetLastError() << ")\n";
     }
-    int newHealth = 9999;
+    int newHealth = 100;
 
-    std::cout << "Freezing health at " << newHealth << "...\n";
+    std::cout << "\t[!] freezing health at " << newHealth << "...\n";
     while (true) {
         if (!WriteProcessMemory(hProcess, (LPVOID)healthAddress, &newHealth, sizeof(newHealth), nullptr)) {
-            std::cout << "Failed to write health.\n";
+            std::cout << "\t[-] failed to write health\n";
             break;
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(10));

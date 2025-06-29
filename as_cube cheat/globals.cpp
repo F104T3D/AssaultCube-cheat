@@ -1,5 +1,3 @@
-#include <windows.h>
-#include <TlHelp32.h>
 #include "globals.hpp"
 
 HANDLE hProcess = nullptr;

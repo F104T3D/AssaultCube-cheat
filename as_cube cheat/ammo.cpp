@@ -6,21 +6,21 @@
 
 void infAmmo() {
 
-    uintptr_t ammoCurrentAddress = playerBase + 140;
+    uintptr_t ammoCurrentAddress = playerBase + 0x140;
 
     int ammo = 0;
     if (ReadProcessMemory(hProcess, (LPCVOID)ammoCurrentAddress, &ammo, sizeof(ammo), nullptr)) {
-        std::cout << "ammo current: " << std::dec << ammo << std::endl;
+        std::cout << "\t[+] ammo current: " << std::dec << ammo << std::endl;
     }
     else {
-        std::cout << "failed to read ammo current value.\n";
+        std::cout << "\t[-] failed to read ammo current value\n";
     }
     int newAmmoCurrent = 1;
 
-    std::cout << "Freezing ammo current at " << newAmmoCurrent << "...\n";
+    std::cout << "\t[!] freezing ammo current at " << newAmmoCurrent << "...\n";
     while (true) {
         if (!WriteProcessMemory(hProcess, (LPVOID)ammoCurrentAddress, &newAmmoCurrent, sizeof(newAmmoCurrent), nullptr)) {
-            std::cout << "Failed to write ammo current.\n";
+            std::cout << "\t[-] failed to write ammo current\n";
             break;
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
