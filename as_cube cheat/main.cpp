@@ -31,7 +31,7 @@ int main() {
     CloseHandle(snapshot);
 
     if (acPID != 0) {
-        std::cout << "[+] ac_client.exe pid: " << acPID << std::endl;
+        std::cout << "[+] ac_client.exe pid: " << acPID << "\n";
     }
     else {
         std::cout << "[-] ac_client.exe not found\n";
@@ -63,7 +63,7 @@ int main() {
             }
         } while (Module32Next(moduleSnap, &modEntry)); // Move to next module
         baseAddress = reinterpret_cast<uintptr_t>(modEntry.modBaseAddr);
-        std::cout << "[+] base address of ac_client.exe: 0x" << std::hex << baseAddress << std::endl;
+        std::cout << "[+] base address of ac_client.exe: 0x" << std::hex << baseAddress << "\n";
     }
     CloseHandle(moduleSnap);
 
