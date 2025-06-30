@@ -22,14 +22,14 @@ void infAmmo() {
         uintptr_t addr = playerBase + ammoType.offset;
 
         if (ReadProcessMemory(hProcess, (LPCVOID)addr, &ammo, sizeof(ammo), nullptr)) {
-            std::cout << "\t[+] " << ammoType.name << " ammo: " << std::dec << ammo << std::endl;
+         // std::cout << "\t[+] " << ammoType.name << " ammo: " << std::dec << ammo << std::endl;
         } else {
             std::cout << "\t[-] failed to read " << ammoType.name << " ammo\n";
         }
     }
 
-    int newAmmo = 100;
-    std::cout << "\t[!] freezing all ammo types at " << newAmmo << "...\n";
+    int newAmmo = 1;
+    std::cout << "\t[!] freezing all ammo types\n";
     while (true) {
         for (const auto& ammoType : ammoTypes) {
             uintptr_t addr = playerBase + ammoType.offset;
