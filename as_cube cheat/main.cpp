@@ -10,7 +10,7 @@ int main() {
     // take image (snapshot) of ALL (TH32C_) proc running - return val is HANDLE a reference to the snapshot in mem
     HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0); // 0 no specific proc
     if (snapshot == INVALID_HANDLE_VALUE) {
-        std::cout << "[-] process snapshot failed\n";
+        std::cout << "\t[-]" << GetLastError() << " process snapshot failed\n";
         return 1; // exit
     }
 
@@ -34,14 +34,14 @@ int main() {
         std::cout << "[+] ac_client.exe pid: " << acPID << "\n";
     }
     else {
-        std::cout << "[-] ac_client.exe not found\n";
+        std::cout << "\t[-]" << GetLastError() << " ac_client.exe not found\n";
         std::cin.get();
         return 1;
     }
 
     hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, acPID); // Full access, We dont want the handle inheritable by child processes, The PID
     if (hProcess == NULL) {
-        std::cout << "[-] failed to open process\n";
+        std::cout << "\t[-]" << GetLastError() << " failed to open process\n";
         return 1;
     }
     else {
@@ -50,7 +50,7 @@ int main() {
 
     HANDLE moduleSnap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, acPID); // Give list of all modules inside this proc 
     if (moduleSnap == INVALID_HANDLE_VALUE) {
-        std::cout << "[-] failed to take module snapshot\n";
+        std::cout << "\t[-]" << GetLastError() << " failed to take module snapshot\n";
         return 1;
     }
     modEntry.dwSize = sizeof(MODULEENTRY32);
@@ -67,13 +67,13 @@ int main() {
     }
     CloseHandle(moduleSnap);
 
-    uintptr_t playerPtrAddress = baseAddress + 0x00195404;
+    uintptr_t playerPtrAddress = baseAddress + PLAYER_POINTER_OFFSET;
 
     if (ReadProcessMemory(hProcess, (LPCVOID)playerPtrAddress, &playerBase, sizeof(playerBase), nullptr)) {
         std::cout << "[+] player base address: 0x" << std::hex << playerBase << "\n\n";
     }
     else {
-        std::cout << "[-] failed to read player base address\n";
+        std::cout << "\t[-]" << GetLastError() << " failed to read player base address\n";
         std::cin.get();
         return 1;
     }
