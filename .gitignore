@@ -1,19 +1,59 @@
-# CMake build files
+# === Qt Creator ===
+*.autosave
+*.user
+*.user.*
+*.pro.user*
+*.qbs.user*
+*.creator.*
+*.creator-user.*
+.qtc_clangd/
+
+# === Build Directories ===
 /build/
+/out/
+/bin/
+/obj/
+
+# === CMake ===
 CMakeFiles/
 CMakeCache.txt
-Makefile
 cmake_install.cmake
+Makefile
+CTestTestfile.cmake
+CPackConfig.cmake
+CPackSourceConfig.cmake
+*.cmake
 
-# Ninja build files
+# === Ninja ===
 .ninja_deps
 .ninja_log
+build.ninja
+rules.ninja
 
-# Qt Creator specific files
-*.pro.user
-*.pro.user.* 
-*.pro.user.*.user
+# === MSYS2 / Windows Junk ===
+*.exe
+*.dll
+*.obj
+*.lib
+*.pdb
+*.idb
+*.ilk
+*.manifest
+*.exp
+*.log
 
-# OS generated files
-.DS_Store
-Thumbs.db
+# === Backup / Temp ===
+*~
+*.bak
+*.swp
+*.swo
+*.tmp
+
+# === Debugging ===
+gmon.out
+vgcore.*
+core
+*.stackdump
+
+# === VS Code / VSCodium (if you use it) ===
+.vscode/
