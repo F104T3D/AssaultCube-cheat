@@ -26,7 +26,7 @@ void infAmmo() {
 // }
 
     int newAmmo = 1;
-    std::cout << "\t[!] freezing all ammo types - F12 to exit\n";
+    std::cout << "\t[!] freezing all ammo types - F11 to exit\n";
     while (true) {
         if (GetAsyncKeyState(VK_F11)) break;
 
@@ -34,7 +34,7 @@ void infAmmo() {
             uintptr_t addr = playerBase + ammoType.offset;
 
             if (!WriteProcessMemory(hProcess, (LPVOID)addr, &newAmmo, sizeof(newAmmo), nullptr)) {
-                std::cout << "\t[-]" << GetLastError() << " failed to write " << ammoType.gun << " ammo\n";
+                std::cout << "\t[-]" << GetLastError() << " failed to write " << ammoType.name << " ammo\n";
             }
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(10));

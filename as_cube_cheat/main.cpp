@@ -3,6 +3,7 @@
 #include <thread>
 #include <iostream>
 #include "globals.hpp"
+#include <cwchar>
 
 int main() {
 
@@ -20,7 +21,7 @@ int main() {
     // Process32First fills the entry struct with info about the first process.
     if (Process32First(snapshot, &entry)) {
         do {
-            if (_wcsicmp(entry.szExeFile, L"ac_client.exe") == 0) {
+            if (stricmp(entry.szExeFile, "ac_client.exe") == 0) {
                 std::cout << "[+] found ac_client process\n";
                 acPID = entry.th32ProcessID;
                 break;
@@ -56,7 +57,7 @@ int main() {
 
     if (Module32First(moduleSnap, &modEntry)) { // Get first module
         do {
-            if (_wcsicmp(modEntry.szModule, L"ac_client.exe") == 0) { // szModule - name of module
+            if (stricmp(modEntry.szModule, "ac_client.exe") == 0) { // szModule - name of module
                 std::cout << "[+] found module: ac_client.exe\n";
                 break;
             }
