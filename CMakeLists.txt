@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Include directory with headers
-include_directories("${CMAKE_SOURCE_DIR}/as_cube cheat")
+include_directories("${CMAKE_SOURCE_DIR}/as_cube_cheat")
 
 # Source files
 set(SOURCES

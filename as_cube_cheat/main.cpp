@@ -1,7 +1,6 @@
 #include <windows.h>
 #include <tlhelp32.h>
 #include <thread>
-#include <chrono>
 #include <iostream>
 #include "globals.hpp"
 
