@@ -32,6 +32,7 @@ extern uintptr_t baseAddress;
 
 void infhealth();
 void infAmmo();
+bool nop(uintptr_t address, size_t length);
 
 
 #endif	

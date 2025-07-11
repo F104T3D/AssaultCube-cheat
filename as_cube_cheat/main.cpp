@@ -79,9 +79,9 @@ int main() {
     }
     
     std::thread healthThread{ infhealth };
-    std::thread ammoThread{ infAmmo };
+    //std::thread ammoThread{ infAmmo };
 
     healthThread.join();
-    ammoThread.join();
+    //ammoThread.join();
     std::cin.get();
 }

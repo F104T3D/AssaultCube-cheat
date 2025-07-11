@@ -1,43 +1,12 @@
 #include <windows.h>
-#include <thread>
-#include <chrono>
-#include <iostream>
 #include "globals.hpp"
+#include <iostream>
 
 void infAmmo() {
-    AmmoInfo ammoTypes[] = {
-        { "assault rifle", AMMO_ASSAULTRIFLE_OFFSET },
-        { "pistol",        AMMO_PISTOL_OFFSET },
-        { "smg",           AMMO_SMG_OFFSET },
-        { "sniper",        AMMO_SNIPER_OFFSET },
-        { "shotgun",       AMMO_SHOTGUN_OFFSET },
-        { "carbine",       AMMO_CARBINE_OFFSET }
-    };
+    uintptr_t ammoSubInstruction = 0x004C7288;
 
-// int ammo = 0;
-// for (const auto& ammoType : ammoTypes) {
-//     uintptr_t addr = playerBase + ammoType.offset;
-//
-//     if (ReadProcessMemory(hProcess, (LPCVOID)addr, &ammo, sizeof(ammo), nullptr)) {
-//         std::cout << "\t[+] " << ammoType.name << " ammo: " << std::dec << ammo << std::endl;
-//     } else {
-//         std::cout << "\t[-]" << GetLastError() << " failed to read " << ammoType.name << " ammo\n";
-//     }
-// }
-
-    int newAmmo = 1;
-    std::cout << "\t[!] freezing all ammo types - F11 to exit\n";
-    while (true) {
-        if (GetAsyncKeyState(VK_F11)) break;
-
-        for (const auto& ammoType : ammoTypes) {
-            uintptr_t addr = playerBase + ammoType.offset;
-
-            if (!WriteProcessMemory(hProcess, (LPVOID)addr, &newAmmo, sizeof(newAmmo), nullptr)) {
-                std::cout << "\t[-]" << GetLastError() << " failed to write " << ammoType.name << " ammo\n";
-            }
-        }
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    if (!nop(ammoSubInstruction, 6)) {
+        std::cout << "[-] failed to nop ammo instruction\n";
+        return;
     }
-    std::cout << "[!] exited health loop";
 }

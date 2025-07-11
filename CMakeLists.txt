@@ -18,5 +18,5 @@ set(HEADERS
 add_executable(AssaultCubeCheat
     ${SOURCES}
     ${HEADERS}
-)
-
+    as_cube_cheat/nop.cpp
+) 
